@@ -1,1 +1,3 @@
 .idea/
+db.sqlite3
+./appJwt/__pycache__/views.cpython-310.pyc
