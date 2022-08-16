@@ -8,5 +8,6 @@ urlpatterns = [
       path('api/register', RegisterApi.as_view()),
       path('api/logout',  BlacklistRefreshView.as_view(), name='logout'),
       path('api/books',  views.BookApi.as_view()),
-      path('hello/', views.Greeting.as_view()),
+      path('api/books/<int:pk>', views.BookApi.as_view()),
+      path('hello', views.Greeting.as_view()),
 ]
