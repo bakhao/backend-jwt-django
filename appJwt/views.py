@@ -39,9 +39,13 @@ class BookApi(generics.GenericAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
 
-    def get(self, request):
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
+    def get(self, request, pk= None):
+        if pk is not None:
+            book = self.get_object()
+            serializer = BookSerializer(book, many=False)
+        else:
+            books = Book.objects.all()
+            serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -51,18 +55,17 @@ class BookApi(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request):
+    def delete(self, request, pk):
         book = self.get_object()
         book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def update(self, pk,  request):
-        book = self.get_object(pk)
+    def update(self, request, pk):
+        book = self.get_object()
         serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 class BlacklistRefreshView(APIView):
