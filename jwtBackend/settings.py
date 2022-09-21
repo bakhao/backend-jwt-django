@@ -13,7 +13,6 @@ import os
 from datetime import timedelta
 from pathlib import Path
 import django_heroku
-import dj_database_url
 import whitenoise.storage
 
 
@@ -25,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kc5^6yjaii!+5#rib08^(q6x0%yfae*y5v)9=klm+f2s%^*ulc'
+SECRET_KEY = os.getenv('DB_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'tranquil-temple-27643.herokuapp.com']
 
@@ -107,11 +106,11 @@ WSGI_APPLICATION = 'jwtBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd62ukv2kq48pri',
-        'USER': 'xtbhexxaxfdedg',
-        'PASSWORD': '890b3a7ba02fef3b170ef887bf2d826537cee5af4d43dd51159309d90ab582f3',
-        'HOST': 'ec2-34-227-135-211.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
