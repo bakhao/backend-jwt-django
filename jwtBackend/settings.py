@@ -14,11 +14,12 @@ from datetime import timedelta
 from pathlib import Path
 import django_heroku
 import whitenoise.storage
-
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -29,7 +30,7 @@ SECRET_KEY = os.getenv('DB_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'tranquil-temple-27643.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'tranquil-temple-27643.herokuapp.com', 'localhost']
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -114,6 +115,7 @@ DATABASES = {
     }
 }
 
+print(DATABASES['default'])
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
